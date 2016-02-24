@@ -5,10 +5,9 @@
  * Collection "views" via a custom content type.
  * 
  */
-require_once dirname(__FILE__) . '/includes/content_view.inc'; // The display of our content type is here.
-require_once dirname(__FILE__) . '/includes/search.inc'; // The modification of solr search/faceting is here.
-require_once dirname(__FILE__) . '/includes/theme.inc'; // Themeing.
-// Do I want to break breadcrumbs out for all of Barnard's site? New module?
+require_once dirname(__FILE__) . '/includes/content_view.inc';
+require_once dirname(__FILE__) . '/includes/search.inc';
+require_once dirname(__FILE__) . '/includes/theme.inc';
 
 // Content global.
 $_islandora_solr_content_type = array();

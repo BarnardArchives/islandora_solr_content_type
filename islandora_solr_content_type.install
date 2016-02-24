@@ -13,8 +13,8 @@
  */
 function islandora_solr_content_type_install() {
   node_types_rebuild();
-  // Note that normally one would call node_add_body_field() for their content type
-  // We do not, instead we create our own "body field" that forces the full page view. 
+  // Instead of calling node_add_body_field(), we create our own body field
+  // that forces the full page view. 
   // This content type works best in the "full" view mode...
   islandora_solr_content_type_add_custom_fields();
   islandora_solr_content_type_add_variables();
@@ -98,8 +98,8 @@ function _islandora_solr_content_type_variables() {
   
   // Default state to published, without other options (e.g., sticky, promoted, etc.).
   $variables['node_options_islandora_solr_content_type'] = array(
-    '0' => 'status'
-    );
+    '0' => 'status',
+  );
 
   // Auto path generation default
   $variables['pathauto_node_islandora_solr_content_type_pattern'] = 'collections/[node:title]';
@@ -107,7 +107,7 @@ function _islandora_solr_content_type_variables() {
   // Menu Default
   $variables['menu_options_islandora_solr_content_type'] = array( 
     '0' => 'main-menu',
-    );
+  );
 
   // Menu Parent (collections). NOT SUPER SURE ABOUT THIS ONE.
   $variables['menu_parent_islandora_solr_content_type'] = 'main-menu:455';
@@ -126,7 +126,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cadinality' => -1,
     'deleted' => 0,
-    );
+  );
 
   $fields['isct_fc_display_opts'] = array(
     'field_name' => 'isct_fc_display_opts',
@@ -135,9 +135,9 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cadinality' => -1,
     'deleted' => 0,
-    );
+  );
 
-  // "Custom" body field (forced to full view, no summary.)
+  // Body field (forced to full view, no summary.)
   $fields['isct_body'] = array(
     'translatable' => 1,
     'field_name' => 'isct_body',
@@ -148,7 +148,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cardinality' => 1,
     'deleted' => 0,
-    );
+  );
 
   // Solr query field
   $fields['isct_solr_query'] = array(
@@ -161,7 +161,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cardinality' => 1,
     'deleted' => 0,
-    );
+  );
 
   // Field: number of results to display per page (rows)
   $fields['isct_query_rows'] = array(
@@ -174,7 +174,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cardinality' => 1,
     'deleted' => 0,
-    );
+  );
 
   // Field: modify #access of facet block's date_slider
   $fields['isct_display_dateslider'] = array(
@@ -204,13 +204,13 @@ function _islandora_solr_content_type_installed_fields() {
       'allowed_values' => array (
         0 => '',
         1 => '',
-        ),
       ),
+    ),
     'active' => 1,
     'locked' => 1,
     'cardinality' => 1,
     'deleted' => 0,
-    );
+  );
 
   // Field: facets displayed on a collection page.
   $fields['isct_display_facets'] = array(
@@ -235,7 +235,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cardinality' => -1,
     'deleted' => 0,
-    );
+  );
 
   // Field: featured image to display at the top of the page, below title, above body.
   $fields['isct_featured_image'] = array(
@@ -251,7 +251,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cardinality' => 1,
     'deleted' => 0,
-    );
+  );
 
   // Field: featured image subtitle or description
   $fields['isct_featured_image_caption'] = array(
@@ -264,7 +264,7 @@ function _islandora_solr_content_type_installed_fields() {
     'locked' => 1,
     'cardinality' => 1,
     'deleted' => 0,
-    );
+  );
 
   // Field: featured image href
   $fields['isct_featured_image_url'] = array(
@@ -289,8 +289,8 @@ function _islandora_solr_content_type_installed_fields() {
       'allowed_values' => array (
         0 => '',
         1 => '',
-        ),
       ),
+    ),
     'active' => 1,
     'locked' => 1,
     'cardinality' => 1,
@@ -300,11 +300,9 @@ function _islandora_solr_content_type_installed_fields() {
   return $fields;
 }
 
-// grumble grumble...
 function _islandora_solr_content_type_instances() {
   $instances = array();
   $t = get_t();
-
 
   $instances['isct_fc_display_opts'] = array(
     'field_name' => 'isct_fc_display_opts',
@@ -317,9 +315,9 @@ function _islandora_solr_content_type_instances() {
       'default' => array(
         'label' => 'hidden',
         'type' => 'hidden',
-        ),
       ),
-    );
+    ),
+  );
 
   $instances['isct_fc_featured_image'] = array(
     'field_name' => 'isct_fc_featured_image',
@@ -333,9 +331,9 @@ function _islandora_solr_content_type_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'weight' => 0,
-        ),
       ),
-    );
+    ),
+  );
 
   $instances['isct_body'] = array(
     'bundle' => 'islandora_solr_content_type',
@@ -367,18 +365,18 @@ function _islandora_solr_content_type_instances() {
     'bundle' => 'islandora_solr_content_type',
     'field_name' => 'isct_solr_query',
     'entity_type' => 'node',
-    'label' => $t('Collection SOLR Query - landing page'),
-    'description' => $t('The SOLR query that will generate desired \'collection view.\' <br>
-    An easy way to create this question is to visit the <a target="_blank" href="'.$GLOBALS['base_root'].'/islandora/search">search page</a> and start with a basic query.
-The URL bar will display the encoded query string. This will give you an idea of a query string.<br><strong><em>Note: You are not restricted to the SOLR search fields available to a site visitor.</em></strong><br>
-Barnard College Examples: 
-<ul>
-<li>Get all yearbooks by mods title AND only display their cover (by collection membership): mods_relatedItem_host_titleInfo_title_ms:"Mortarboard" AND RELS_EXT_isMemberOf_uri_ms:"info:fedora/islandora:bookCollection"</li>
-<li>Get all photographs using mods: mods_genre_ms:"photographs"</li>
-</ul>'),
+    'label' => $t('Collection solr Query - landing page'),
+    'description' => $t('The solr query that will generate desired \'collection view.\' <br>
+      An easy way to create this question is to visit the <a target="_blank" href="'.$GLOBALS['base_root'].'/islandora/search">search page</a> and start with a basic query.
+      The URL bar will display the encoded query string. This will give you an idea of a query string.<br><strong><em>Note: You are not restricted to the SOLR search fields available to a site visitor.</em></strong><br>
+      Barnard College Examples: 
+      <ul>
+        <li>Get all yearbooks by mods title AND only display their cover (by collection membership): mods_relatedItem_host_titleInfo_title_ms:"Mortarboard" AND RELS_EXT_isMemberOf_uri_ms:"info:fedora/islandora:bookCollection"</li>
+        <li>Get all photographs using mods: mods_genre_ms:"photographs"</li>
+      </ul>'),
     'default_value' => array(
-      0 => array(
-        'value' => $t('RELS_EXT_isMemberOf_uri_ms:"info:fedora/bc:barnard-literary-magazine"'), // This is for dev and should be removed.
+      array(
+        'value' => $t('RELS_EXT_isMemberOf_uri_ms:"info:fedora/bc:barnard-literary-magazine"'),
       ),
     ),
     'deleted' => 0,
@@ -410,7 +408,7 @@ Barnard College Examples:
     'entity_type' => 'node',
     'label' => $t('Number of results to display per page'),
     'default_value' => array(
-      0 => array(
+      array(
         'value' => $t('8'),
       ),
     ),
@@ -438,7 +436,7 @@ Barnard College Examples:
     ),
   );
 
-$instances['isct_display_dateslider'] = array(
+  $instances['isct_display_dateslider'] = array(
     'bundle' => 'isct_fc_display_opts',
     'field_name' => 'isct_display_dateslider',
     'entity_type' => 'field_collection_item',
@@ -468,7 +466,7 @@ $instances['isct_display_dateslider'] = array(
     ),
   );
 
-$instances['isct_display_auto_expand_date'] = array(
+  $instances['isct_display_auto_expand_date'] = array(
     'bundle' => 'isct_fc_display_opts',
     'field_name' => 'isct_display_auto_expand_date',
     'entity_type' => 'field_collection_item',
@@ -498,13 +496,13 @@ $instances['isct_display_auto_expand_date'] = array(
     ),
   );
 
-$instances['isct_display_facets'] = array(
+  $instances['isct_display_facets'] = array(
     'bundle' => 'isct_fc_display_opts',
     'field_name' => 'isct_display_facets',
     'entity_type' => 'field_collection_item',
     'type' => 'list_text',
     'label' => $t('Facets to display on page'),
-    'default_value' => array( // this should not be static same as with the field.
+    'default_value' => array(
       0 => array('value' => 'mods_subject_topic_ms',),
       1 => array('value' => 'mods_genre_ms',),
       2 => array('value' => 'mods_subject_name_personal_namePart_ms',),

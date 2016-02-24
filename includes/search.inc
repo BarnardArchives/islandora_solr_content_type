@@ -7,7 +7,7 @@
 
 
 /**
- * Implements hook_form_FORM_ID_alter()
+ * Implements hook_form_FORM_ID_alter().
  * We're gonna use our own submit handler for our content type.
  */
 function islandora_solr_content_type_form_islandora_solr_advanced_search_form_alter(&$form, &$form_state) {
@@ -18,7 +18,6 @@ function islandora_solr_content_type_form_islandora_solr_advanced_search_form_al
 		$form['#submit'][] = 'islandora_solr_content_type_advanced_search_form_submit';
 		$form_state['build_info']['args']['islandora_solr_content_type'] = TRUE;
 	}
-
 }
 
 /**
@@ -29,7 +28,7 @@ function islandora_solr_content_type_form_islandora_solr_advanced_search_form_al
  * @param array $form_state
  *   An associative array containing form state.
  *
- * @see islandora_solr_advanced_search_form()
+ * @see islandora_solr_advanced_search_form().
  */
 function islandora_solr_content_type_advanced_search_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora_solr', 'includes/utilities');
@@ -77,7 +76,7 @@ function islandora_solr_content_type_advanced_search_form_submit($form, &$form_s
   // Get our current params.
  	$params = isset($_islandora_solr_queryclass->internalSolrParams) ? $_islandora_solr_queryclass->internalSolrParams : array();
 
-  // Unset our collection query from the params. We're building a new CQ below.
+  // Unset our collection query from the params. We're building a new cq below.
   if (isset($params['cq'])) {
     unset($params['cq']);
   }
@@ -98,9 +97,6 @@ function islandora_solr_content_type_advanced_search_form_submit($form, &$form_s
   // );
 }
 
-
-
-## REGION TEMPORARY SEARCH TESTING
 /*
 // This is a temporary search block in an attempt to get SOLR working with our current setup.
 function islandora_solr_content_type_search_form($form, &$form_state) {
@@ -145,6 +141,5 @@ function islandora_solr_content_type_search_form_submit($form, &$form_state) {
   );
 }
 */
-## END REGION TEMPORARY SEARCH TESTING
 
 ?>

@@ -2,18 +2,16 @@
 // vim: set filetype=php expandtab tabstop=2 shiftwidth=2 autoindent smartindent:
 /**
  * @file
- * Collection page THEME modifications.
+ * Collection page theme modifications.
  */
 
 /**
  * Implements theme_preprocess_page().
  */
 function islandora_solr_content_type_preprocess_page(&$vars) {
-	// This code allows page level themeing based on the type of NODE.
-	if (isset($vars['node']) && $vars['node']->type == 'islandora_solr_content_type') {
-		if (!(bool)strpos(current_path(),'edit')) {
-			$vars['theme_hook_suggestions'][] = 'page__node__' . $vars['node']->type;
-		} // else { do some edit page theming or nothing... }
+	// This code allows page level theming based on the type of node.
+	if (isset($vars['node']) && $vars['node']->type == 'islandora_solr_content_type' && arg(1) != 'edit') {
+		$vars['theme_hook_suggestions'][] = 'page__node__' . $vars['node']->type;
 	}
 }
 
