@@ -88,8 +88,10 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   );
 
   $node->content['sort_order_block'] = array(
-    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
-      'sort'), '#weight' => '2',
+    '#markup' => str_replace('<h2 class="block__title block-title">Sort</h2>',
+      '<h2 class="block__title block-title">Sort this collection</h2>',
+      islandora_solr_content_type_block_content_render('islandora_solr',
+      'sort')), '#weight' => '2',
   );
 
   $node->content['results']
