@@ -260,7 +260,7 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
   // solr query to the user's term with a catch-all so we get as much for our
   // search as possible. Finally, we return the ISQP and stop the function from
   // continuing.
-  if ($_GET['cq'] || count($islandora_solr_query->solrParams['fq']) > 1) {
+  if ($_GET['cq'] /* || count($islandora_solr_query->solrParams['fq']) > 1 */) {
 
     // If we have an unique search query different from the collection query
     // use it.
@@ -285,6 +285,7 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
   // collection landing view...
   $islandora_solr_query->solrParams['fq'][]
     = $_islandora_solr_content_type['solr_query'];
+
 
   return $islandora_solr_query;
 }
