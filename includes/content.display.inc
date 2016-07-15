@@ -286,7 +286,6 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
   $islandora_solr_query->solrParams['fq'][]
     = $_islandora_solr_content_type['solr_query'];
 
-
   return $islandora_solr_query;
 }
 
