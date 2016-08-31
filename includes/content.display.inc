@@ -80,18 +80,10 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
       = islandora_solr($_GET['cq']);
   }
 
-  // Build the rest of our block's content - include the switch
-  // (list/grid) and sort blocks.
-  $node->content['switch_block'] = array(
-    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
-      'display_switch'), '#weight' => '2',
-  );
-
+  // Build the rest of our block's content - include the sort block.
   $node->content['sort_order_block'] = array(
-    '#markup' => str_replace('<h2 class="block__title block-title">Sort</h2>',
-      '<h2 class="block__title block-title">Sort by:</h2>',
-      islandora_solr_content_type_block_content_render('islandora_solr',
-      'sort')), '#weight' => '2',
+    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
+      'sort'), '#weight' => '2',
   );
 
   $node->content['results']
@@ -109,16 +101,6 @@ function islandora_solr_content_type_block_list_alter(&$blocks) {
   // If it is not one of our unique queries, return;
   if (!$_islandora_solr_content_type['view']) {
     return;
-  }
-
-  // Find the display_switch block that, for some unknown reason, is
-  // displayed on all pages on our site (or by default)
-  // We do not want *this* display_switch block, since
-  // we already render and add it to our pages ['content'].
-  foreach ($blocks as $block) {
-    if ($block->delta == 'display_switch') {
-      unset($blocks[$block->bid]);
-    }
   }
 
   // We're going to add our sidebar content, mainly the facet block and
