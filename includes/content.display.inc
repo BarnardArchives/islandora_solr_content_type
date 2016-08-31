@@ -70,7 +70,7 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   // We use a param called "cq" if the user has preformed a search from our
   // collection page. If it's not there we display the content as it was
   // configured by the curator.
-  if (!$_GET['cq']) {
+  if (empty($_GET['cq'])) {
     // See hook_islandora_solr_query().
     $solr_result_output = islandora_solr();
   }
@@ -262,7 +262,7 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
   // solr query to the user's term with a catch-all so we get as much for our
   // search as possible. Finally, we return the ISQP and stop the function from
   // continuing.
-  if ($_GET['cq'] /* || count($islandora_solr_query->solrParams['fq']) > 1 */) {
+  if (!empty($_GET['cq']) /* || count($islandora_solr_query->solrParams['fq']) > 1 */) {
 
     // If we have an unique search query different from the collection query
     // use it.
