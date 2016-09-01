@@ -81,7 +81,7 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   }
 
   $node->content['islandora_display_switch'] = array(
-   '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
+    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
       'display_switch'), '#weight' => '2',
   );
 
