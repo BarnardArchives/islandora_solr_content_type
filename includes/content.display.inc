@@ -82,8 +82,8 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
 
   $node->content['islandora_display_switch'] = array(
    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
-     'display_switch'), '#weight' => '2',
- );
+      'display_switch'), '#weight' => '2',
+  );
 
   // Build the rest of our block's content - include the sort block.
   $node->content['islandora_display_sort'] = array(
