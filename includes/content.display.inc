@@ -264,12 +264,12 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
 
     // If we have an unique search query different from the collection query
     // use it.
-    if ($_islandora_solr_content_type['solr_search_query']) {
-      $islandora_solr_query->solrParams['fq'][]
-        = $_islandora_solr_content_type['solr_search_query'];
+  if ($_islandora_solr_content_type['solr_search_query']) {
+    $islandora_solr_query->solrParams['fq'][]
+      = $_islandora_solr_content_type['solr_search_query'];
 
-      return $islandora_solr_query;
-    }
+    return $islandora_solr_query;
+  }
 
     // We do not have an unique search query, so we'll tokenize our collection
     // query fields and use them.
@@ -306,8 +306,10 @@ function islandora_solr_content_type_islandora_solr_query_alter(&$islandora_solr
     = $_islandora_solr_content_type['query_rows'];
 
   // Update facets to only those selected...
-  $islandora_solr_query->solrParams['facet.field']
-    = $_islandora_solr_content_type['display_facets'];
+  if (!empty($_islandora_solr_content_type['display_facets'])) {
+    $islandora_solr_query->solrParams['facet.field']
+      = $_islandora_solr_content_type['display_facets'];
+  }
 }
 
 // vim: set filetype=php:
