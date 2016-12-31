@@ -157,7 +157,7 @@ function islandora_solr_content_type_block_list_alter(&$blocks) {
  * @param object $b
  *   block b.
  *
- * @return bool 
+ * @return bool
  *   weight of blocks.
  */
 function islandora_solr_content_type_custom_sort($a, $b) {
@@ -191,7 +191,7 @@ function islandora_solr_content_type_block_content_render($module, $function) {
  * elements.
  */
 function islandora_solr_content_type_form_islandora_solr_range_slider_form_alter(&$form,
-  &$form_state) {
+                                                                                 &$form_state) {
   global $_islandora_solr_content_type;
 
   // If it is not one of our unique queries, return;
@@ -225,7 +225,7 @@ function islandora_solr_content_type_form_islandora_solr_range_slider_form_alter
  * elements.
  */
 function islandora_solr_content_type_form_islandora_solr_date_filter_form_alter(&$form,
-  &$form_state) {
+                                                                                &$form_state) {
   global $_islandora_solr_content_type;
 
   // If it is not one of our unique queries, return;
@@ -253,35 +253,13 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
     return;
   }
 
-  // Has the user entered a search term? Here is where we modify our collection
-  // view... First we need to find if any strings were used in the solr fq, and
-  // change them to tokenized fields (i.e. 'ms' becomes 'mt'). Then we set our
-  // solr query to the user's term with a catch-all so we get as much for our
-  // search as possible. Finally, we return the ISQP and stop the function from
-  // continuing.
-  if (!empty($_GET['cq']) /* || count($islandora_solr_query->solrParams['fq']) > 1 */) {
-
-    // If we have an unique search query different from the collection query
-    // use it.
-    if ($_islandora_solr_content_type['solr_search_query']) {
-      $islandora_solr_query->solrParams['fq'][]
-        = $_islandora_solr_content_type['solr_search_query'];
-
-      return $islandora_solr_query;
-    }
-
-    // We do not have an unique search query, so we'll tokenize our collection
-    // query fields and use them.
-    $solr_query
-      = str_replace('_ms:', '_mt:',
-      $_islandora_solr_content_type['solr_query']);
-    $islandora_solr_query->solrParams['fq'][] = $solr_query;
-
+  // If the solr_search_query field is filled in, use that query.
+  if ($_islandora_solr_content_type['solr_search_query']) {
+    $islandora_solr_query->solrParams['fq'][]
+      = $_islandora_solr_content_type['solr_search_query'];
     return $islandora_solr_query;
   }
-
-  // We do not have a user collection search, so just preform and display the
-  // collection landing view...
+  // Otherwise use the more user-friendly version.
   $islandora_solr_query->solrParams['fq'][]
     = $_islandora_solr_content_type['solr_query'];
 
@@ -305,8 +283,10 @@ function islandora_solr_content_type_islandora_solr_query_alter(&$islandora_solr
     = $_islandora_solr_content_type['query_rows'];
 
   // Update facets to only those selected...
-  $islandora_solr_query->solrParams['facet.field']
-    = $_islandora_solr_content_type['display_facets'];
+  if (!empty($_islandora_solr_content_type['display_facets'])) {
+    $islandora_solr_query->solrParams['facet.field']
+      = $_islandora_solr_content_type['display_facets'];
+  }
 }
 
 // vim: set filetype=php:
