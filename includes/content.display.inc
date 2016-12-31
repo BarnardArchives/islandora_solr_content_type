@@ -70,7 +70,7 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   // We use a param called "cq" if the user has preformed a search from our
   // collection page. If it's not there we display the content as it was
   // configured by the curator.
-  if (!$_GET['cq']) {
+  if (empty($_GET['cq'])) {
     // See hook_islandora_solr_query().
     $solr_result_output = islandora_solr();
   }
