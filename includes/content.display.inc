@@ -87,9 +87,15 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
 
   // Build the rest of our block's content - include the sort block.
   $node->content['islandora_display_sort'] = array(
-    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
-      'sort'), '#weight' => '2',
+    '#markup' => islandora_solr_content_type_block_content_render('bc_islandora',
+      'solr_sort_select'), '#weight' => '2',
   );
+
+  // // Build the rest of our block's content - include the sort block.
+  // $node->content['islandora_display_sort'] = array(
+  //   '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
+  //     'sort'), '#weight' => '2',
+  // );
 
   $node->content['results']
     = array('#markup' => $solr_result_output, '#weight' => '3');
