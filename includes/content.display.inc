@@ -71,7 +71,7 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   // We use a param called "cq" if the user has preformed a search from our
   // collection page. If it's not there we display the content as it was
   // configured by the curator.
-  if (empty($_GET['cq'])) {
+  if (empty($_GET['cq']) && empty($_GET['f'])) {
     $_islandora_solr_content_type['user_search'] = FALSE;
     // See hook_islandora_solr_query().
     $solr_result_output = islandora_solr();
@@ -88,8 +88,10 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   );
 
   $node->content['islandora_display_sort'] = array(
-    '#markup' => islandora_solr_content_type_block_content_render('bc_islandora',
+    '#markup' => islandora_solr_content_type_block_content_render('islandora_solr',
       'solr_sort_select'), '#weight' => '3',
+//    '#markup' => islandora_solr_content_type_block_content_render('bc_islandora',
+//      'solr_sort_select'), '#weight' => '3',
   );
 
   // Build the rest of our block's content - include the sort block.
@@ -182,7 +184,7 @@ function islandora_solr_content_type_custom_sort($a, $b) {
  * @param string $function
  *   function name.
  *
- * @ return drupal_render
+ * @return string (drupal_render)
  *  Returns the rendered drupal block from module with function.
  */
 function islandora_solr_content_type_block_content_render($module, $function) {
