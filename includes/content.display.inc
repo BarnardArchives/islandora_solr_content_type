@@ -38,6 +38,7 @@ function islandora_solr_content_type_prepare_content($node) {
       }
     }
   }
+
 }
 
 /**
@@ -71,13 +72,14 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   // collection page. If it's not there we display the content as it was
   // configured by the curator.
   if (empty($_GET['cq'])) {
+    $_islandora_solr_content_type['user_search'] = FALSE;
     // See hook_islandora_solr_query().
     $solr_result_output = islandora_solr();
   }
   else {
+    $_islandora_solr_content_type['user_search'] = TRUE;
     // See hook_islandora_solr_query().
-    $solr_result_output
-      = islandora_solr($_GET['cq']);
+    $solr_result_output = islandora_solr($_GET['cq']);
   }
 
   $node->content['islandora_display_switch'] = array(
@@ -85,11 +87,13 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
       'display_switch'), '#weight' => '2',
   );
 
-  // Build the rest of our block's content - include the sort block.
   $node->content['islandora_display_sort'] = array(
     '#markup' => islandora_solr_content_type_block_content_render('bc_islandora',
-      'solr_sort_select'), '#weight' => '2',
+      'solr_sort_select'), '#weight' => '3',
   );
+
+  // Build the rest of our block's content - include the sort block.
+
 
   // // Build the rest of our block's content - include the sort block.
   // $node->content['islandora_display_sort'] = array(
@@ -98,7 +102,7 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
   // );
 
   $node->content['results']
-    = array('#markup' => $solr_result_output, '#weight' => '3');
+    = array('#markup' => $solr_result_output, '#weight' => '4');
 
 }
 
@@ -256,18 +260,18 @@ function islandora_solr_content_type_islandora_solr_query($islandora_solr_query)
   global $_islandora_solr_content_type;
 
   if (!$_islandora_solr_content_type['view']) {
-    return;
+    return FALSE;
   }
 
   // If the solr_search_query field is filled in, use that query.
-  if ($_islandora_solr_content_type['solr_search_query']) {
+  if ($_islandora_solr_content_type['user_search']) {
     $islandora_solr_query->solrParams['fq'][]
       = $_islandora_solr_content_type['solr_search_query'];
-    return $islandora_solr_query;
+  } else {
+    // Otherwise use the collection default quesry.
+    $islandora_solr_query->solrParams['fq'][]
+      = $_islandora_solr_content_type['solr_query'];
   }
-  // Otherwise use the more user-friendly version.
-  $islandora_solr_query->solrParams['fq'][]
-    = $_islandora_solr_content_type['solr_query'];
 
   return $islandora_solr_query;
 }
@@ -280,7 +284,7 @@ function islandora_solr_content_type_islandora_solr_query_alter(&$islandora_solr
 
   // If it is not one of our unique queries, return.
   if (!$_islandora_solr_content_type['view']) {
-    return;
+    return FALSE;
   }
 
   // I need to figure out pagination and why 'query_rows' isn't restricting the
@@ -293,6 +297,7 @@ function islandora_solr_content_type_islandora_solr_query_alter(&$islandora_solr
     $islandora_solr_query->solrParams['facet.field']
       = $_islandora_solr_content_type['display_facets'];
   }
+
 }
 
 // vim: set filetype=php:
