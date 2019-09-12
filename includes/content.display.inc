@@ -47,7 +47,6 @@ function islandora_solr_content_type_prepare_content($node) {
  * This is where we display our content type to the end-user.
  */
 function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
-  // Party on Garth. Party on.
   if ($node->type !== 'islandora_solr_content_type') {
     return;
   }
@@ -95,7 +94,7 @@ function islandora_solr_content_type_node_view($node, $view_mode = 'full') {
 
   $node->content['islandora_display_sort'] = array(
     '#markup' => islandora_solr_content_type_block_content_render('bc_islandora',
-      'solr_sort_select'), '#weight' => '3',
+      'solr_sort_select'), '#weight' => '2',
   );
 
   $node->content['results']
